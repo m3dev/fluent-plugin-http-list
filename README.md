@@ -3,7 +3,8 @@
 ## Overview
 
 This plugin takes a JSON list of events as input via HTTP POST. If you're
-sending a lot of events this can eliminate some overhead. 
+sending a lot of events this simplifies your client's code and eliminates 
+the overhead of creating a lot of brief connections.
 
 ※ Note that unlike the default HTTP plugin, this does *not* support msgpack. 
 
