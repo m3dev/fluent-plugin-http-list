@@ -90,9 +90,12 @@ class HttpListInput < Input
 
       if js = params['json']
         records = JSON.parse(js)
+        p records
       else
         raise "'json' parameter is required" + params.keys.to_s
       end
+
+    time = params['time'].nil? ? Engine.now : params['time'].to_i
 
     rescue
       return ["400 Bad Request", {'Content-type'=>'text/plain'}, "400 Bad Request\n#{$!}\n"]

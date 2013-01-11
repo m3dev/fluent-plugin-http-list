@@ -14,7 +14,7 @@ The HttpListInput plugin uses the same settings you would use for the standard
 HTTP input plugin. Example:
 
     <source>
-      type http
+      type http_list
       port 8888
       bind 0.0.0.0
       body_size_limit 32m
@@ -36,10 +36,9 @@ Each event will go to your output plugins as an individual event.
 ## TODO
 
 - MessagePack support (probably as a different plugin)
-- Support for time parameter
 
 ## Copyright
 
-Copyright:: Copyright (c) 2013 M3, Inc. (written by Paul McCann)
+Copyright (c) 2013 M3, Inc. (written by Paul McCann)
 
-License::   Apache License, Version 2.0
+Apache License, Version 2.0
