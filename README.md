@@ -41,4 +41,5 @@ Each event will go to your output plugins as an individual event.
 ## Copyright
 
 Copyright:: Copyright (c) 2013 M3, Inc. (written by Paul McCann)
+
 License::   Apache License, Version 2.0
