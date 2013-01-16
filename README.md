@@ -33,12 +33,9 @@ Have your logging system send JSON lists of events. Example:
 
 Each event will go to your output plugins as an individual event. 
 
-## TODO
-
-- MessagePack support (probably as a different plugin)
-
 ## Copyright
 
-Copyright (c) 2013 M3, Inc. (written by Paul McCann)
+Copyright (c) 2013 M3, Inc. 
+Based on the in_http plugin by FURUHASHI Sadayuki
 
 Apache License, Version 2.0

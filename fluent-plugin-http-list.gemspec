@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |gem|
   gem.name          = "fluent-plugin-http-list"
-  gem.version       = "0.0.1"
+  gem.version       = "0.1.0"
   gem.authors       = ["Paul McCann"]
-  gem.email         = ["p-mccann@m3.com"]
+  gem.email         = ["polm@dampfkraft.com"]
   gem.description   = %q{fluent plugin to accept multiple events in one HTTP request}
   gem.summary       = %q{fluent plugin to accept multiple events in one HTTP request}
   gem.homepage      = "https://github.com/m3dev/fluent-plugin-http-list"
