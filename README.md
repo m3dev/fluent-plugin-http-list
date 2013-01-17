@@ -2,9 +2,10 @@
 
 ## Overview
 
-This plugin takes a JSON list of events as input via HTTP POST. If you're
-sending a lot of events this simplifies your client's code and eliminates 
-the overhead of creating a lot of brief connections.
+This plugin takes a JSON list of events as input via a single HTTP POST request
+and emits each as an individual event to your output plugins. If you're sending
+a lot of events this simplifies your client's code and eliminates the overhead
+of creating a lot of brief connections.
 
 ※ Note that unlike the default HTTP plugin, this does *not* support msgpack. 
 
@@ -31,7 +32,8 @@ Have your logging system send JSON lists of events. Example:
     curl -X POST -d 'json=[{"fish":"catfish","user":23},{"fish":"elephantfish","user":23}]' \
       http://localhost:8888/fish.tracker
 
-Each event will go to your output plugins as an individual event. 
+Each event in the list will be sent to your output plugins as an individual
+event. 
 
 ## Copyright
 
