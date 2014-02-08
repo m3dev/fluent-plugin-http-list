@@ -1,4 +1,4 @@
-# fluent-plugin-http-list
+# fluent-plugin-http-list, a plugin for [Fluentd](http://fluentd.org)
 
 ## Overview
 
