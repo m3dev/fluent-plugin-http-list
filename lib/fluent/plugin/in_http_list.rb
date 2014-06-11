@@ -16,6 +16,7 @@ class HttpListInput < Input
   config_param :bind, :string, :default => '0.0.0.0'
   config_param :body_size_limit, :size, :default => 32*1024*1024 
   config_param :keepalive_timeout, :time, :default => 10   
+  config_param :default_tag, :string, :default => nil
 
   def configure(conf)
     super
@@ -87,6 +88,10 @@ class HttpListInput < Input
     begin
       path = path_info[1..-1]  # remove /
       tag = path.split('/').join('.')
+
+      if tag.strip.empty? and @default_tag
+        tag = @default_tag
+      end
 
       if js = params['json']
         records = JSON.parse(js)
