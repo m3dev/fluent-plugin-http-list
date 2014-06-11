@@ -16,6 +16,8 @@ class HttpListInput < Input
   config_param :bind, :string, :default => '0.0.0.0'
   config_param :body_size_limit, :size, :default => 32*1024*1024 
   config_param :keepalive_timeout, :time, :default => 10   
+  config_param :blob_fallback, :bool, :default => false
+  config_param :fallback_delimiter, :string, :default => "\n"
   config_param :default_tag, :string, :default => nil
   config_param :record_remote_host, :bool, :default => false
   config_param :remote_address_key, :string, :default => "remote_addr"
@@ -99,6 +101,10 @@ class HttpListInput < Input
       if js = params['json']
         records = JSON.parse(js)
         p records
+      elsif @blob_fallback
+        records = params['body'].to_s.
+          split(@fallback_delimiter).
+          map {|r| JSON.parse({"message" => r.encode('UTF-8', {:invalid => :replace, :undef => :replace, :replace => '?'})}.to_json)}
       else
         raise "'json' parameter is required" + params.keys.to_s
       end
@@ -229,6 +235,7 @@ class HttpListInput < Input
       end
       path_info = @parser.request_path
 
+      params['body'] = @body
       params['remote_address'] = @remote_address
       params['remote_address_dns'] = @remote_address_dns
 
