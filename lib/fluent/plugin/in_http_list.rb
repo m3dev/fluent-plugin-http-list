@@ -17,6 +17,9 @@ class HttpListInput < Input
   config_param :body_size_limit, :size, :default => 32*1024*1024 
   config_param :keepalive_timeout, :time, :default => 10   
   config_param :default_tag, :string, :default => nil
+  config_param :record_remote_host, :bool, :default => false
+  config_param :remote_address_key, :string, :default => "remote_addr"
+  config_param :remote_address_dns_key, :string, :default => "host"
 
   def configure(conf)
     super
@@ -109,6 +112,10 @@ class HttpListInput < Input
 
     begin
       records.each{|r| 
+          if @record_remote_host
+            r.update({@remote_address_key     => params['remote_address'].to_s,
+                      @remote_address_dns_key => params['remote_address_dns'].to_s})
+          end
           Engine.emit(tag, time, r)
       }
     rescue
@@ -121,6 +128,8 @@ class HttpListInput < Input
   class Handler < Coolio::Socket
     def initialize(io, km, callback, body_size_limit)
       super(io)
+      @remote_address = io.remote_address.ip_address
+      @remote_address_dns = io.remote_address.getnameinfo[0]
       @km = km
       @callback = callback
       @body_size_limit = body_size_limit
@@ -219,6 +228,9 @@ class HttpListInput < Input
         params['json'] = @body
       end
       path_info = @parser.request_path
+
+      params['remote_address'] = @remote_address
+      params['remote_address_dns'] = @remote_address_dns
 
       code, header, body = *@callback.call(path_info, params)
       body = body.to_s
