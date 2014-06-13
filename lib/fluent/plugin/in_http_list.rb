@@ -20,6 +20,8 @@ class HttpListInput < Input
   config_param :record_remote_host, :bool, :default => false
   config_param :remote_address_key, :string, :default => "remote_addr"
   config_param :remote_address_dns_key, :string, :default => "host"
+  config_param :status_tag, :string, :default => nil
+  config_param :status_response, :string, :default => nil
 
   def configure(conf)
     super
@@ -122,7 +124,11 @@ class HttpListInput < Input
       return ["500 Internal Server Error", {'Content-type'=>'text/plain'}, "500 Internal Server Error\n#{$!}\n"]
     end
 
-    return ["200 OK", {'Content-type'=>'text/plain'}, ""]
+    response_body = ""
+    if tag == @status_tag
+      response_body = @status_response + "\n"
+    end
+    return ["200 OK", {'Content-type'=>'text/plain'}, response_body]
   end
 
   class Handler < Coolio::Socket
